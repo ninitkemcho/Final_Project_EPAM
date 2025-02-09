@@ -27,48 +27,54 @@ Final_Project_EPAM
 └── requirements.txt
 ```
 
+## Instructions
 
 ## Data:
 
 Run ` src/data_loader.py ` for generating and saving train, test data in csv format. 
+It creates new folder ` data/raw ` and saves them locally.
 
 ## Training:
 
-Training is done in `train.py`
+Training is done in ` src/train/train.py`
 
 **Instructions for training the model in Docker:**
 
 1. Build an image:
 
-```bash
-docker build --no-cache -f <path_to_your_local_training_dockerfile_directory> -t training_image <path_to_your_local_repository_directory>
+Make sure you are in your local repository directory and run this in dockerfile terminal (I didn't know that last time)
 
 ```
-My dockerfile has .dockerfile expansion, so be sure to include it in the path
-
-Do not forget to replace <path_to_your_local_training_dockerfile_directory> and <path_to_your_local_repository_directory> with your local path
-
+docker build -t training_image -f src/train/Dockerfile .
+```
+'C:/Users/99559/OneDrive - iset.ge/Desktop/Extra Activities/Epam/Data Science/Final_Project_EPAM'
 
 2. Run the container:
-
-Run this code in cmd, because in my case it did not work in git bash.
 
 ```bash
 docker run -it training_image /bin/bash
 ```
 
+To return to your host machine run:
 ```bash
-docker cp <container_id>:/app/model.pkl ./model.pkl
+exit
 ```
 
-Replace `<container_id>` with your running Docker container ID 
-
-**Without Docker using just Python:**
-
+Create new directory for mode;
 ```bash
-python3 training/train.py
+mkdir -p outputs/models
 ```
-**Not recommended, directories does not work**
+
+Save processed data and model locally
+```bash
+docker cp <container_id>:/app/data/processed ./data/
+docker cp <container_id>:/app/outputs/models/model.pkl ./outputs/models/model.pkl
+```
+
+Do not forget to replace `<container_id>` with your running Docker container ID 
+
+
+**Without Docker you can just run ` src/train/train.py ` **
 
 ## Inference
 
@@ -78,7 +84,7 @@ python3 training/train.py
 1. Build the inference Docker image:
 
 ```bash
-docker build --no-cache -f <path_to_your_local_inference_dockerfile_directory> --build-arg model_name=model.pkl -t inference_image <path_to_your_local_repository_directory>
+docker build -t inference_image -f src/inference/Dockerfile .
 ```
 
 2. Run the inference Docker container:
@@ -87,16 +93,29 @@ docker build --no-cache -f <path_to_your_local_inference_dockerfile_directory> -
 docker run -it inference_image /bin/bash  
 ```
 
-After that ensure that there is `iris_predictions.csv` in the `results` directory in the inference container.
-
-
-**Without Docker using just Python:**
-
+To return to your host machine run:
 ```bash
-python inference/run.py
+exit
 ```
-**Not recommended, directories does not work**
 
-## Conclusions
+Create new directories for results
+```bash
+mkdir -p outputs/figures
+mkdir -p outputs/predictions
+```
 
-There was no need for initial data processing, because of simple data structure. Also, deep learning algorithm handled extremely well this small dataset and reached unrealistic accuracy metric. Not much to infer from so small data.
+Saves results locally: metrics,cm,predictions
+```bash
+docker cp <container_id>:/app/outputs/predictions/predictions.csv ./outputs/predictions/predictions.csv
+docker cp <container_id>:/app/outputs/predictions/metrics.txt ./outputs/predictions/metrics.txt
+docker cp <container_id>:/app/outputs/figures/confusion_matrix.png ./outputs/figures/confusion_matrix.png
+```
+
+**Without Docker you can just run ` src/inference/run_inference.py ` **
+
+## DS part
+
+1. Text cleaning included: removing unnecessary symbols, whitespaces and httml/URL tags
+2. After tokenization, stop words were removed and used lemmatization over stemming (almost same results, but lemmatization is considered to be less prone to errors)
+3. Vectorization -> TF-IDF (because it showed better results, compared to n-grams)
+4. Model Selection -> Logistic Regression 
