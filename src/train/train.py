@@ -1,29 +1,13 @@
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
-
-from wordcloud import WordCloud
-from collections import Counter
-
 import re
-import emoji
-
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-
-from sklearn.feature_extraction.text import CountVectorizer
+from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-from gensim.models import Word2Vec
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay
-
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-
 import pickle
-from scipy.sparse import save_npz, load_npz
+from scipy.sparse import save_npz
 
 import nltk
 nltk.download('punkt')
@@ -99,7 +83,7 @@ save_npz(X_test_path, X_test_tfidf)
 print(f"TF-IDF test data saved to {X_test_path}")
 
 # Fitting Logistic Regression
-log_reg = LogisticRegression()
+log_reg = LogisticRegression(random_state = 42)
 log_reg.fit(X_train_tfidf, y_train)
 
 #Saving model locally
