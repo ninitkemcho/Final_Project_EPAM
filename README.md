@@ -27,7 +27,7 @@ Final_Project_EPAM
 └── requirements.txt
 ```
 
-## Instructions
+## MLE part instructions
 
 ## Data:
 
@@ -112,10 +112,21 @@ docker cp <container_id>:/app/outputs/figures/confusion_matrix.png ./outputs/fig
 
 ## DS part
 
-1. Text cleaning included: removing unnecessary symbols, whitespaces and httml/URL tags
-2. After tokenization, stop words were removed and used lemmatization over stemming (almost same results, but lemmatization is considered to be less prone to errors)
-3. Vectorization -> TF-IDF (because it showed better results, compared to n-grams, 2% higher accuracy)
-4. Model Selection -> Logistic Regression (chose because of highest accuracy, I know my modeling part excludes cross-validation and better model could be found after that)
+### EDA
+
+1. Explored unnecessary text breaks, common english words
+2. Text cleaning included: removing unnecessary symbols, whitespaces and httml/URL tags
+
+### Feature Engineering
+
+1. After tokenization, stop words were removed and used lemmatization over stemming (almost same results, but lemmatization is considered to be less prone to errors)
+2. Vectorization -> TF-IDF (because it showed better results, compared to n-grams, 2% higher accuracy)
+
+### Modeling
+
+1. Used Logistic Regression as baseline model, because its simple
+2. Compared results of it to Random Forest and SVM (interesting with high-dimensional data)
+3. Model Selection -> Logistic Regression (chose because of highest accuracy, I know my modeling part excludes cross-validation and better model could be found after that)
 
 
 **Model results**
@@ -128,3 +139,12 @@ F1-score  : 0.8865
 AUC-ROC   : 0.9561
 ==================================================
 ```
+
+You can see more comprehensive discussion in `notebooks/final_project.ipynb`
+
+### Business Application
+
+1. Recommendation systems for Netflix,etc to suggest positively rated movies and improve user experience
+2. Theaters/movies can use these classifications to extend/cut the movie showing period
+3. Imdb can implement this system for providing 'summarized' review and shorten the time for searching movie
+4. Could be further modified for identifying spams, filtering real and fake reviews from each other. 
