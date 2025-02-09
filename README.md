@@ -4,7 +4,7 @@
 
 ```
 Final_Project_EPAM
-├── data
+├── data #gitignored
 │   ├── raw/
 │   ├── processed/ # Includes clean, splitted and vectorized data
 ├── notebooks/
@@ -16,7 +16,7 @@ Final_Project_EPAM
 │   │   ├── run_inference.py
 │   │   └── Dockerfile
 │   └── data_loader.py
-├── outputs # Respository does not include, will be generated after running codes
+├── outputs # gitignored, generated after running
 │   ├── models/ 
 │   │   └── model.pkl
 │   ├── predictions/
