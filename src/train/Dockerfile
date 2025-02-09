@@ -5,21 +5,22 @@ FROM python:3.8
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
-COPY requirements.txt .
+COPY requirements.txt .  
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Ensure necessary NLTK resources are available
 RUN python -c "import nltk; \
     nltk.download('punkt'); \
+    nltk.download('punkt_tab'); \
     nltk.download('wordnet'); \
     nltk.download('stopwords'); \
     nltk.download('omw-1.4')"
 
 # Copy data folder to Docker
-COPY data/ /app/data
+COPY data /app/data/
 
-# Copy the code itself
-COPY train /app/src/train
+# Copy the training script
+COPY src/train /app/src/train/
 
 # Train the model
-RUN python3 train/train.py
+RUN python3 /app/src/train/train.py
