@@ -9,16 +9,16 @@ os.makedirs(base_dir, exist_ok=True)
 
 def download_file(url, save_path):
 
-    print(f'Downloading from {url}...')
+    print(f'Downloading from {url}...\n')
     response = requests.get(url, stream=True)
     
     if response.ok:
         with open(save_path, 'wb') as file:
             for chunk in response.iter_content(1024):
                 file.write(chunk)
-        print(f'Saved to {save_path}')
+        print(f'Saved to {save_path}\n')
     else:
-        raise Exception(f'Download failed: {response.status_code}')
+        raise Exception(f'Download failed: {response.status_code}\n')
 
 if __name__ == '__main__':
     dataset_url_train = 'https://drive.google.com/uc?id=1kodw_qjeJfYP7urTNc7fwaLTkeYFiQQ8'
