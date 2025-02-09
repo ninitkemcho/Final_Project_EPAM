@@ -36,18 +36,15 @@ It creates new folder ` data/raw ` and saves them locally.
 
 ## Training:
 
-Training is done in ` src/train/train.py`
-
 **Instructions for training the model in Docker:**
 
 1. Build an image:
 
-Make sure you are in your local repository directory and run this in dockerfile terminal (I didn't know that last time)
+Make sure you are in your local repository directory and run this in dockerfile terminal
 
 ```
 docker build -t training_image -f src/train/Dockerfile .
 ```
-'C:/Users/99559/OneDrive - iset.ge/Desktop/Extra Activities/Epam/Data Science/Final_Project_EPAM'
 
 2. Run the container:
 
@@ -60,7 +57,7 @@ To return to your host machine run:
 exit
 ```
 
-Create new directory for mode;
+Create new directory for model
 ```bash
 mkdir -p outputs/models
 ```
@@ -74,7 +71,7 @@ docker cp <container_id>:/app/outputs/models/model.pkl ./outputs/models/model.pk
 Do not forget to replace `<container_id>` with your running Docker container ID 
 
 
-**Without Docker you can just run ` src/train/train.py ` **
+**Without Docker you can just run ` src/train/train.py `**
 
 ## Inference
 
@@ -111,11 +108,23 @@ docker cp <container_id>:/app/outputs/predictions/metrics.txt ./outputs/predicti
 docker cp <container_id>:/app/outputs/figures/confusion_matrix.png ./outputs/figures/confusion_matrix.png
 ```
 
-**Without Docker you can just run ` src/inference/run_inference.py ` **
+**Without Docker you can just run ` src/inference/run_inference.py `**
 
 ## DS part
 
 1. Text cleaning included: removing unnecessary symbols, whitespaces and httml/URL tags
 2. After tokenization, stop words were removed and used lemmatization over stemming (almost same results, but lemmatization is considered to be less prone to errors)
-3. Vectorization -> TF-IDF (because it showed better results, compared to n-grams)
-4. Model Selection -> Logistic Regression 
+3. Vectorization -> TF-IDF (because it showed better results, compared to n-grams, 2% higher accuracy)
+4. Model Selection -> Logistic Regression (chose because of highest accuracy, I know my modeling part excludes cross-validation and better model could be found after that)
+
+
+**Model results**
+```
+==================================================
+Accuracy  : 0.8852
+Precision : 0.8765
+Recall    : 0.8968
+F1-score  : 0.8865
+AUC-ROC   : 0.9561
+==================================================
+```
