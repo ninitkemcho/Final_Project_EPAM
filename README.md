@@ -6,7 +6,7 @@
 Final_Project_EPAM
 ├── data
 │   ├── raw/
-│   ├── processed/
+│   ├── processed/ # Includes clean, splitted and vectorized data
 ├── notebooks/
 ├── src
 │   ├── train
@@ -16,13 +16,13 @@ Final_Project_EPAM
 │   │   ├── run_inference.py
 │   │   └── Dockerfile
 │   └── data_loader.py
-├── outputs
-│   ├── models/
-│   │   └── model_1.pkl
+├── outputs # Respository does not include, will be generated after running codes
+│   ├── models/ 
+│   │   └── model.pkl
 │   ├── predictions/
 │   │   ├── predictions.csv
 │   │   └── metrics.txt
-│   └── figures/
+│   └── figures/ #Includes confusion matrix
 ├── README.md
 └── requirements.txt
 ```
